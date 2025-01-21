@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const MultiWaysSendMoney: React.FC = () => {
   return (
@@ -11,12 +12,12 @@ const MultiWaysSendMoney: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Cash Pickup */}
         <div className="flex flex-col">
-          <img
-            className="mb-4"
-            width="25px"
-            height="30px"
+          <Image
             src="/images/demo.svg"
             alt="Cash Pickup"
+            width={30} // Specify width
+            height={30} // Specify height
+            className="mb-4"
           />
           <h6 className="mb-4 font-bold">Cash Pickup</h6>
           <p className="text-gray-400">
@@ -26,12 +27,12 @@ const MultiWaysSendMoney: React.FC = () => {
 
         {/* Bank Deposit */}
         <div className="flex flex-col">
-          <img
-            className="mb-4"
-            width="25px"
-            height="30px"
+          <Image
             src="/images/demo.svg"
             alt="Bank Deposit"
+            width={30} // Specify width
+            height={30} // Specify height
+            className="mb-4"
           />
           <h6 className="mb-4 font-bold">Bank Deposit</h6>
           <p className="text-gray-400">
@@ -41,13 +42,14 @@ const MultiWaysSendMoney: React.FC = () => {
 
         {/* Mobile Topup */}
         <div className="flex flex-col">
-          <img
-            className="mb-4"
-            width="25px"
-            height="30px"
+          <Image
             src="/images/demo.svg"
             alt="Mobile Topup"
+            width={30} // Specify width
+            height={30} // Specify height
+            className="mb-4"
           />
+
           <h6 className="mb-4 font-bold">Mobile Topup</h6>
           <p className="text-gray-400">
             Pickup cash from our local agents (Tellers) in minutes.
@@ -56,12 +58,12 @@ const MultiWaysSendMoney: React.FC = () => {
 
         {/* Mobile Money Wallet */}
         <div className="flex flex-col">
-          <img
-            className="mb-4"
-            width="25px"
-            height="30px"
+          <Image
             src="/images/demo.svg"
             alt="Mobile Money Wallet"
+            width={30} // Specify width
+            height={30} // Specify height
+            className="mb-4"
           />
           <h6 className="mb-4 font-bold">Mobile Money Wallet</h6>
           <p className="text-gray-400">

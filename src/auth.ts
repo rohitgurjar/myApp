@@ -25,18 +25,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
     async jwt({ token, user, account }) {
+      // Handle google provide
       if (account && account.provider === "google") {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
         token.picture = user.image;
+        token.accessToken = account.access_token;
       } else if (account && account.provider === "apple") {
         // Handle Apple provider
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.picture = user.image; // Assuming `image` is available in the Apple provider's response
-      } else if (user) {
+        token.picture = user.image;
+      }
+      // Handle user provider
+      else if (user) {
         token.id = user.id;
         token.name = user.firstName;
         token.jwtToken = user.jWT;
@@ -44,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
   },
-  session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
+  session: { strategy: "jwt", maxAge: 10 * 60 * 60 },
   providers: [
     GoogleProvider({
       clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,

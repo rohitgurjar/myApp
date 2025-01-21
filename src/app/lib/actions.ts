@@ -6,8 +6,8 @@ export const authenticatess = async ({
   email,
   password,
 }: {
-  email: string | undefined | any;
-  password: string | undefined | any;
+  email: string | undefined; // email is a string or undefined
+  password: string | undefined; // password is a string or undefined
 }) => {
   try {
     const response = await axios.get(

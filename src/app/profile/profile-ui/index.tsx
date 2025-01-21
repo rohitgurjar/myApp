@@ -1,9 +1,32 @@
 "use client";
 import { useState } from "react";
-
 import ProfileEditForm from "../profile-edit-form";
 
-export default function ProfileUI({ user }: any) {
+// Define the types for the user info structure
+type UserInfo = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  countryId: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  postalCode: string;
+};
+
+type User = {
+  user: {
+    info: UserInfo;
+    jwtToken: string;
+  };
+};
+
+type ProfileUIProps = {
+  user: User;
+};
+
+export default function ProfileUI({ user }: ProfileUIProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const toggleEdit = () => {

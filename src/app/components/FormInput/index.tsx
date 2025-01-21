@@ -9,10 +9,10 @@ interface FormInputProps {
   required?: boolean;
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  error?: any;
-  touched?: any;
+  error?: string; // Error as a string
+  touched?: boolean; // Touched as a boolean
   disabled?: boolean;
-  onBlur: any;
+  onBlur: React.FocusEventHandler<HTMLInputElement>; // onBlur as a focus event handler
 }
 
 const FormInput: React.FC<FormInputProps> = ({
