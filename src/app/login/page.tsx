@@ -18,7 +18,7 @@ export default function Login() {
 
           if (result?.error) {
             console.error("Login error:", result.error);
-            alert("Invalid credentials. Please try again.");
+            alert("Invalid credentials Please try again.");
           } else if (result?.ok) {
             // Redirect to dashboard on successful login
             window.location.href = "/dashboard";
