@@ -1,6 +1,7 @@
 // components/GoogleLoginButton.tsx
 import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
+import Image from "next/image";
 
 // Define the payload structure for the external API
 interface GoogleAuthPayload {
@@ -9,8 +10,7 @@ interface GoogleAuthPayload {
 }
 
 const GoogleLogin = () => {
-  const { data: session, status } = useSession();
-
+  const { data: session } = useSession();
 
   // Handle Google login
   const handleGoogleLogin = () => {
@@ -19,9 +19,9 @@ const GoogleLogin = () => {
 
   // After the session is updated, send the access token to the external API
   useEffect(() => {
-    if (session?.user?.access_token) {
-      const access_token = session.user.access_token;
-      const isapplogin = false; // Adjust based on your logic
+    if (session?.user?.accessToken) {
+      const access_token = session?.user?.accessToken;
+      const isapplogin = false;
 
       const payload: GoogleAuthPayload = {
         access_token,
@@ -54,7 +54,13 @@ const GoogleLogin = () => {
       onClick={handleGoogleLogin}
       className="flex items-center justify-center border border-gray-300 text-black w-[140px] rounded-md p-2 cursor-pointer text-sm md:text-base hover:bg-gray-100"
     >
-      <img src="/google-icon.svg" alt="Google logo" className="w-5 h-5 mr-2" />
+      <Image
+        src="/google-icon.svg"
+        alt="Google logo"
+        width={20} // Specify width
+        height={20} // Specify height
+        className="mr-2"
+      />
       Google
     </button>
   );

@@ -5,8 +5,32 @@ import * as Yup from "yup"; // For validation
 import SelectDropdown from "@/app/components/SelectInput";
 import FormInput from "@/app/components/FormInput";
 
+// Define the types for the user info structure
+type UserInfo = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  countryId: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  postalCode: string;
+};
+
+type User = {
+  user: {
+    info: UserInfo;
+    jwtToken: string;
+  };
+};
+
+type ProfileEditFormProps = {
+  user: User;
+};
+
 type Country = {
-  value: Number;
+  value: number;
   label: string;
 };
 
@@ -16,7 +40,7 @@ const CountryData: Country[] = [
   { value: 9, label: "United Kingdom" },
 ];
 
-const ProfileEditForm = ({ user }: any) => {
+const ProfileEditForm = ({ user }: ProfileEditFormProps) => {
   const formik = useFormik({
     initialValues: {
       firstName: user.user.info.firstName || "",

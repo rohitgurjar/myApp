@@ -1,5 +1,6 @@
 import { signIn } from "next-auth/react";
 import axios from "axios";
+import Image from "next/image";
 
 interface AppleLoginResponse {
   account: {
@@ -17,7 +18,6 @@ const AppleLogin: React.FC = () => {
 
       // Narrow the type after casting to 'unknown'
       const appleLoginResponse = response as AppleLoginResponse | undefined;
-
 
       if (appleLoginResponse?.error) {
         console.error("Apple login failed:", appleLoginResponse.error);
@@ -53,7 +53,13 @@ const AppleLogin: React.FC = () => {
       onClick={handleAppleLogin}
       className="flex items-center justify-center border border-gray-300 text-black w-[140px] rounded-md p-2 cursor-pointer text-sm md:text-base hover:bg-gray-100"
     >
-      <img src="/apple-store.svg" alt="Apple logo" className="w-5 h-5 mr-2" />
+      <Image
+        src="/apple-store.svg"
+        alt="Apple logo"
+        width={20} // Specify width
+        height={20} // Specify height
+        className="mr-2"
+      />
       Apple
     </button>
   );

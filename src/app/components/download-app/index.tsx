@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const DownloadApp: React.FC = () => {
   return (
@@ -11,28 +12,34 @@ const DownloadApp: React.FC = () => {
             </h2>
             <div className="flex justify-center items-center">
               <div className="mr-4">
-                <img
-                  className="mb-4"
+                <Image
+                  width={120}
+                  height={20}
                   src="/images/AppStore.svg"
                   alt="App Store"
+                  className="mb-4"
                 />
               </div>
 
               <div>
-                <img
-                  className="mb-4"
+                <Image
+                  width={120}
+                  height={20}
                   src="/images/PlayStore.svg"
                   alt="Play Store"
+                  className="mb-4"
                 />
               </div>
             </div>
           </div>
 
           <div className="mt-8 sm:mt-0 order-1">
-            <img
-              className="mb-4 w-64 sm:w-auto"
+            <Image
+              width={672}
+              height={745}
               src="/images/iphone.png"
               alt="iPhone"
+              className="mb-4 w-64 sm:w-auto"
             />
           </div>
         </div>
