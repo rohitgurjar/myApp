@@ -27,13 +27,12 @@ function ResendActivationEmailDialog({ closeDialog }: props) {
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "https://dev-api.whytelion.com/ticketsirdotnet/api/v1/Account/InitiateEmailVerification",
+          `http://172.16.1.130/api/v1/Auth/ReSentActivate?email=${values.email}`,
           {
-            method: "POST",
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email: values.email }),
           }
         );
 
@@ -77,6 +76,7 @@ function ResendActivationEmailDialog({ closeDialog }: props) {
                 value={formik.values.email}
                 error={formik.errors.email}
                 touched={formik.touched.email}
+                onBlur={formik.handleBlur}
                 required
               />
             </div>
@@ -120,7 +120,7 @@ function ResendActivationEmailDialog({ closeDialog }: props) {
                         d="M4 12a8 8 0 018-8v8H4z"
                       ></path>
                     </svg>
-                    <span>Send...</span>
+                    <span>Sending...</span>
                   </span>
                 ) : (
                   "Send"

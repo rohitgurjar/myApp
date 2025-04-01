@@ -31,7 +31,7 @@ function ForgotPasswordDialog({ closeDialog }: props) {
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "https://dev-api.whytelion.com/ticketsirdotnet/api/v1/Account/ResetPassword",
+          "http://172.16.1.130/api/v1/Auth/ResetPassword",
           {
             method: "POST",
             headers: {
@@ -42,16 +42,6 @@ function ForgotPasswordDialog({ closeDialog }: props) {
         );
 
         const responseData = await response.json();
-
-        if (responseData.responceCode === 200) {
-          alert(responseData.message);
-          closeDialog();
-        }
-
-        if (responseData.responceCode === 400) {
-          alert(responseData.message);
-          closeDialog();
-        }
       } catch (error) {
         console.error("Error sending email:", error);
         alert(error);

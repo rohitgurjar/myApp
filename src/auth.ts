@@ -42,8 +42,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Handle user provider
       else if (user) {
         token.id = user.id;
-        token.name = user.firstName;
-        token.jwtToken = user.jWT;
+        token.name = user.name;
+        token.jwtToken = user.token;
       }
       return token;
     },
@@ -70,6 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
 
         user = await res?.data;
+
         if (res?.data && user) {
           return user;
         }

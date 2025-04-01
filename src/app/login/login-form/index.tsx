@@ -56,10 +56,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <GoogleLogin />
             <AppleLogin />
-          </div>
+          </div> */}
           <form onSubmit={formik.handleSubmit} className="space-y-6">
             <div>
               <FormInput

@@ -6,11 +6,7 @@ import * as Yup from "yup"; // Import Yup
 import FormInput from "@/app/components/FormInput";
 import SelectDropdown from "@/app/components/SelectInput";
 import Link from "next/link";
-
-type Country = {
-  value: string;
-  label: string;
-};
+import DateDropdown from "@/app/components/date-picker";
 
 type genderType = {
   value: string;
@@ -20,24 +16,16 @@ type genderType = {
 interface SignInValues {
   email: string;
   password: string;
-  isAppuser: boolean;
-  country: string;
   firstName: string;
-  middleName: string;
+  mobileNo: string;
   lastName: string;
   gender: string;
-  confirmPassword: string;
+  ageSecret: boolean;
 }
 
-const CountryData: Country[] = [
-  { value: "usa", label: "United States" },
-  { value: "canada", label: "Canada" },
-  { value: "uk", label: "United Kingdom" },
-];
-
 const genderData: genderType[] = [
-  { value: "male", label: "Male" },
-  { value: "female", label: "Female" },
+  { value: "Male", label: "Male" },
+  { value: "Female", label: "Female" },
   { value: "other", label: "Other" },
 ];
 
@@ -46,64 +34,53 @@ const validationSchema = Yup.object({
     .email("Invalid email address")
     .required("Email is required"),
   firstName: Yup.string().required("First name is required"),
-  middleName: Yup.string(),
   lastName: Yup.string().required("Last name is required"),
-  country: Yup.string().required("Country is required"),
   gender: Yup.string().required("Gender is required"),
+  mobileNo: Yup.string().required("Mobile number is required"),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Confirm password is required"),
 });
 
 const RegisterForm: React.FC = () => {
+  const [selectedDate, setSelectedDate] = React.useState<string>("");
+
   const formik = useFormik<SignInValues>({
     initialValues: {
-      country: "",
       firstName: "",
-      middleName: "",
       lastName: "",
       gender: "",
+      mobileNo: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      isAppuser: false,
+      ageSecret: false,
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         const response = await fetch(
-          "https://dev-api.whytelion.com/ticketsirdotnet/api/v1/Account/UserRegistration",
+          "http://172.16.1.130/api/v1/Auth/register",
           {
             method: "POST",
+            mode: "cors", // Explicitly set CORS mode
+
             headers: {
               "Content-Type": "application/json",
+              Accept: "application/json",
             },
-            body: JSON.stringify(values), // Send form data as JSON
+            body: JSON.stringify({ birthdate: selectedDate, ...values }),
           }
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to register user.");
-        }
-
         const data = await response.json();
 
-        if (data.isEmailExists) {
-          alert("Error: Email is already exist");
+        if (data && data.code === 200) {
+          alert(data.data);
+          resetForm();
         }
-
-        if (!data.isEmailExists) {
-          alert(data.message);
-        }
-        // Handle the response (e.g., redirect to login or show success message)
       } catch (error) {
         console.error("Error during registration:", error);
         alert(error);
-
-        // Handle the error (e.g., show error message)
       }
     },
   });
@@ -119,20 +96,6 @@ const RegisterForm: React.FC = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={formik.handleSubmit} className="space-y-6">
-            <div className="sm:col-span-3">
-              <SelectDropdown
-                label="Country"
-                id="country"
-                name="country"
-                options={CountryData}
-                onChange={formik.handleChange}
-                value={formik.values.country}
-                error={formik.errors.country}
-                touched={formik.touched.country}
-                required
-              />
-            </div>
-
             <div>
               <FormInput
                 label="First Name"
@@ -146,21 +109,6 @@ const RegisterForm: React.FC = () => {
                 error={formik.errors.firstName}
                 touched={formik.touched.firstName}
                 required
-              />
-            </div>
-
-            <div>
-              <FormInput
-                label="Middle Name"
-                type="text"
-                id="middleName"
-                name="middleName"
-                placeholder="Enter your middle name"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.middleName}
-                error={formik.errors.middleName}
-                touched={formik.touched.middleName}
               />
             </div>
 
@@ -196,6 +144,31 @@ const RegisterForm: React.FC = () => {
 
             <div>
               <FormInput
+                label="Mobile Number"
+                type="text"
+                id="mobileNo"
+                name="mobileNo"
+                placeholder="Enter your Mobile Number"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.mobileNo}
+                error={formik.errors.mobileNo}
+                touched={formik.touched.mobileNo}
+                required
+              />
+            </div>
+
+            <div>
+              <DateDropdown
+                label="Birthday"
+                onChange={setSelectedDate}
+                setSelectedDate={setSelectedDate}
+                selectedDate={selectedDate}
+              />
+            </div>
+
+            <div>
+              <FormInput
                 label="Email"
                 type="email"
                 id="email"
@@ -226,35 +199,19 @@ const RegisterForm: React.FC = () => {
               />
             </div>
 
-            <div>
-              <FormInput
-                label="Confirm password"
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Enter your password"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.errors.confirmPassword}
-                touched={formik.touched.confirmPassword}
-                required
-              />
-            </div>
-
             <div className="flex items-center">
               <input
                 type="checkbox"
                 id="checkbox"
                 className="form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
                 onChange={formik.handleChange}
-                value={formik.values.isAppuser ? "true" : "false"}
+                value={formik.values.ageSecret ? "true" : "false"}
               />
               <label
                 htmlFor="checkbox"
                 className="ml-2 text-sm font-medium text-gray-900"
               >
-                Subscribe to our newsletter
+                Keep my age secret
               </label>
             </div>
 

@@ -13,7 +13,7 @@ export const authConfig = {
         nextUrl.pathname.startsWith(path)
       );
 
-      const protectedPaths = ["/dashboard", "/profile"];
+      const protectedPaths = ["/my-reminder", "/profile"];
 
       const isOnProtectedPath = protectedPaths.some((path) =>
         nextUrl.pathname.startsWith(path)
@@ -21,7 +21,7 @@ export const authConfig = {
 
       if (isOnSignInPage) {
         if (isLoggedIn) {
-          return Response.redirect(new URL("/dashboard", nextUrl));
+          return Response.redirect(new URL("/my-reminder", nextUrl));
         }
         return true;
       }

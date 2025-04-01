@@ -26,17 +26,22 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
   required = false,
   error,
   touched,
+  disabled,
 }) => {
   return (
     <div className="mt-4">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      <label
+        htmlFor={String(id)}
+        className="block text-sm font-medium text-gray-700"
+      >
         {label} {required && <span>*</span>}
       </label>
       <select
-        id={id}
+        id={String(id)}
         name={name}
-        value={value} // Use `value` to control the selected option
+        value={value !== undefined ? String(value) : ""}
         onChange={onChange}
+        disabled={disabled}
         className={`mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 ${
           error && touched
             ? "border-red-500 focus:ring-red-500"
@@ -48,7 +53,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
           Select an option
         </option>
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={String(option.value)}>
             {option.label}
           </option>
         ))}

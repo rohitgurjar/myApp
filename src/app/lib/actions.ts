@@ -6,24 +6,21 @@ export const authenticatess = async ({
   email,
   password,
 }: {
-  email: string | undefined; // email is a string or undefined
-  password: string | undefined; // password is a string or undefined
+  email: string | undefined;
+  password: string | undefined;
 }) => {
   try {
-    const response = await axios.get(
-      `https://dev-api.whytelion.com/ticketsirdotnet/api/v1/Account/VerifyUser`,
+    const response = await axios.post(
+      "http://172.16.1.130/api/v1/Auth/login",
+      { email, password }, // Request body
       {
-        params: {
-          email,
-          password,
-          isAppuser: false,
-        },
         headers: {
           "Content-Type": "application/json",
         },
       }
     );
-    return response.data; // Or whatever you want to return from the response
+
+    return response.data;
   } catch (error) {
     console.error("Error during authentication:", error);
     throw error;

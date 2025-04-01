@@ -39,8 +39,6 @@ const AppleLogin: React.FC = () => {
           payload
         );
 
-        console.log("API Response:", apiResponse.data);
-
         // Handle API success response (e.g., store tokens, redirect, etc.)
       }
     } catch (error) {

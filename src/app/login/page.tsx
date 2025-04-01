@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import LoginForm from "./login-form";
+import { showToast } from "../components/toaster";
 
 export default function Login() {
   return (
@@ -18,10 +19,12 @@ export default function Login() {
 
           if (result?.error) {
             console.error("Login error:", result.error);
-            alert("Invalid credentials Please try again.");
+            // alert("Invalid credentials. Please try again.");
+            showToast(result?.error, "error");
           } else if (result?.ok) {
-            // Redirect to dashboard on successful login
-            window.location.href = "/dashboard";
+            // Redirect to my-reminder on successful login
+            showToast("Login successfully", "success");
+            window.location.href = "/my-reminder";
           }
         }}
       />
